@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Layout from "~/layout";
-
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+
+import Layout from "~/layout";
 import InputField from "~/components/inputField";
 import SocialProviders from "~/components/social-providers";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import { apiInstance } from "~/utils";
 
 export default function Login() {
   const { push } = useRouter();
@@ -41,10 +41,7 @@ export default function Login() {
   // handle Submit
   const handleSubmit = async () => {
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/auth/user/login",
-        userInfo,
-      );
+      const res = await apiInstance.post("/login", userInfo);
       if (res) {
         toast.success("Login Successfully");
         void push("/success");

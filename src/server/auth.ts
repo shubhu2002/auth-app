@@ -6,7 +6,6 @@ import {
 } from "next-auth";
 
 import TwitterProvider from "next-auth/providers/twitter";
-import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -34,10 +33,6 @@ export const authOptions: NextAuthOptions = {
       clientId: env.TWITTER_CLIENT_ID,
       clientSecret: env.TWITTER_CLIENT_SECRET,
       version: "2.0",
-    }),
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,

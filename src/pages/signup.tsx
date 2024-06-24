@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Layout from "~/layout";
-import axios from "axios";
+import { useRouter } from "next/router";
 import Link from "next/link";
+
+import Layout from "~/layout";
 import InputField from "~/components/inputField";
 import SocialProviders from "~/components/social-providers";
-import { useRouter } from "next/router";
+import { apiInstance } from "~/utils";
 
 export default function SignUp() {
   const { push } = useRouter();
@@ -69,10 +70,7 @@ export default function SignUp() {
   // handle submit
   const handleSubmit = async () => {
     try {
-      await axios.post(
-        "http://localhost:8000/api/auth/user/register",
-        userInfo,
-      );
+      await apiInstance.post("/register", userInfo);
     } catch (error) {
       console.log(error);
     }
@@ -85,12 +83,10 @@ export default function SignUp() {
     async function checkUsername() {
       const username = userInfo.username;
       try {
-        const res = await axios.post<{
+        const res = await apiInstance.post<{
           available: boolean;
           message: string | null;
-        }>("http://localhost:8000/api/auth/user/checkusername", {
-          username,
-        });
+        }>("/checkusername", { username });
         setUsernameStatus({
           available: res.data?.available,
           message: res.data?.message,
@@ -167,7 +163,7 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-5 flex w-full flex-col items-center justify-between gap-6 px-3 md:flex-row md:px-6">
+      <div className="absolute bottom-5 z-[1] flex w-full flex-col items-center justify-between gap-6 px-3 md:flex-row md:px-6">
         <div>
           <span>Already have an account , </span>
           <Link href={"/login"} className="text-base text-[#6b61a4]">
