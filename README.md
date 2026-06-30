@@ -1,29 +1,129 @@
-# Create T3 App
+# AuthenTrace
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A modern authentication system built with Next.js, featuring credential-based login/signup and social OAuth providers. Styled with a dark-themed UI, animated gradient backgrounds, and parallax effects.
 
-## What's next? How do I make an app with this?
+**Live Demo:** [authentrace.vercel.app](https://authentrace.vercel.app/)
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- **Credential Authentication** -- Sign up and log in with username and password
+- **Social OAuth Login** -- Google, GitHub, and Twitter (X) via NextAuth.js
+- **Real-time Validation** -- Username availability check, password strength indicator
+- **Responsive Design** -- Mobile-first layout with Tailwind CSS
+- **Parallax Background** -- Animated gradient effects using `react-parallax-mouse`
+- **Toast Notifications** -- User feedback via `react-toastify`
+- **Environment Validation** -- Type-safe env vars with `@t3-oss/env-nextjs` and Zod
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Tech Stack
 
-## Learn More
+| Layer     | Technology                          |
+| --------- | ----------------------------------- |
+| Framework | Next.js 14 (Pages Router)           |
+| Auth      | NextAuth.js v4                      |
+| Styling   | Tailwind CSS                        |
+| Language  | TypeScript                          |
+| Backend   | External API (Node.js on Render)    |
+| Hosting   | Vercel                              |
+| Package   | pnpm                                |
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Pages
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+| Route      | Description                                       |
+| ---------- | ------------------------------------------------- |
+| `/`        | Landing page with welcome message                 |
+| `/login`   | Login form with credentials + social providers     |
+| `/signup`  | Registration form with validation + social login   |
+| `/success` | Authenticated user profile with sign-out option    |
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Getting Started
 
-## How do I deploy this?
+### Prerequisites
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- Node.js 18+
+- pnpm 9+
+
+### Installation
+
+```bash
+git clone https://github.com/shubhu2002/auth-app.git
+cd auth-app
+pnpm install
+```
+
+### Environment Variables
+
+Create a `.env` file based on `.env.example`:
+
+```env
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Google OAuth
+GOOGLE_CLIENT_ID=""
+GOOGLE_CLIENT_SECRET=""
+
+# GitHub OAuth
+GITHUB_CLIENT_ID=""
+GITHUB_CLIENT_SECRET=""
+
+# Twitter/X OAuth 2.0
+TWITTER_CLIENT_ID=""
+TWITTER_CLIENT_SECRET=""
+```
+
+Generate a NextAuth secret:
+
+```bash
+openssl rand -base64 32
+```
+
+### Run Development Server
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── gradient-prallax.tsx   # Animated background
+│   ├── inputField.tsx         # Reusable input component
+│   └── social-providers.tsx   # Google, GitHub, Twitter buttons
+├── layout/
+│   └── index.tsx              # App shell with head, toast, background
+├── pages/
+│   ├── api/auth/[...nextauth].ts  # NextAuth API route
+│   ├── _app.tsx
+│   ├── index.tsx              # Landing page
+│   ├── login.tsx              # Login page
+│   ├── signup.tsx             # Sign-up page
+│   └── success.tsx            # Authenticated profile
+├── server/
+│   └── auth.ts                # NextAuth config & providers
+├── styles/
+│   ├── globals.css
+│   └── toast.css
+├── types/
+│   └── next-auth.d.ts         # Session type extensions
+├── utils/
+│   └── index.ts               # Axios instance
+└── env.js                     # Zod env schema
+```
+
+## Scripts
+
+| Command          | Description            |
+| ---------------- | ---------------------- |
+| `pnpm dev`       | Start dev server       |
+| `pnpm build`     | Production build       |
+| `pnpm start`     | Start production server|
+| `pnpm lint`      | Run ESLint             |
+| `pnpm typecheck` | Run TypeScript checks  |
+
+## License
+
+This project is open source.
